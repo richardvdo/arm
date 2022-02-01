@@ -7,6 +7,8 @@ Servo servoClaw;
 
 const int buttonClosePin = 12;
 const int buttonOpenPin = 13; 
+int buttonCloseState = 0; 
+int buttonOpenState = 0; 
 
 int const potPinServoRot = A0; // analog pin used to connect the potentiometer
 int const potPinServoArm1 = A1; // analog pin used to connect the potentiometer

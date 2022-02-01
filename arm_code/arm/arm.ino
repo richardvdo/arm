@@ -1,14 +1,3 @@
-/*
-
-  Parts required:
-  - servo motor
-  - 10 kilohm potentiometer
-  - two 100 uF electrolytic capacitors
-
-
-*/
-
-// include the Servo library
 #include <Servo.h>
 
 Servo servoRot;  // create a servo object
@@ -16,15 +5,17 @@ Servo servoArm1;
 Servo servoArm2;
 Servo servoClaw;
 
+const int buttonClosePin = 12;
+const int buttonOpenPin = 13; 
 
 int const potPinServoRot = A0; // analog pin used to connect the potentiometer
 int const potPinServoArm1 = A1; // analog pin used to connect the potentiometer
 int const potPinServoArm2 = A2; // analog pin used to connect the potentiometer
-int const potPinServoClaw = A3; // analog pin used to connect the potentiometer
+
 int potValServoRot;  // variable to read the value from the analog pin
 int potValServoArm1;  // variable to read the value from the analog pin
 int potValServoArm2;  // variable to read the value from the analog pin
-int potValServoClaw;  // variable to read the value from the analog pin
+
 int angleServoRot;   // variable to hold the angle for the servo motor
 int angleServoArm1;   // variable to hold the angle for the servo motor
 int angleServoArm2;   // variable to hold the angle for the servo motor
@@ -36,6 +27,10 @@ void setup() {
   servoArm1.attach(9);
   servoArm2.attach(10);
   servoClaw.attach(11);
+  pinMode(buttonClosePin, INPUT);
+  pinMode(buttonOpenPin, INPUT);
+  digitalWrite(buttonClosePin, HIGH);
+  digitalWrite(buttonOpenPin, HIGH);
   Serial.begin(9600); // open a serial connection to your computer
 }
 
@@ -51,21 +46,31 @@ void loop() {
   potValServoArm2 = analogRead(potPinServoArm2); // read the value of the potentiometer
   Serial.print("potValServoArm2: ");
   Serial.print(potValServoArm2);
-  potValServoClaw = analogRead(potPinServoClaw); // read the value of the potentiometer
-  Serial.print("potValServoClaw: ");
-  Serial.print(potValServoClaw);
+
+  buttonCloseState = digitalRead(buttonClosePin);
+  Serial.print(", buttonCloseState: ");
+  Serial.println(buttonCloseState);
+  buttonOpenState = digitalRead(buttonOpenPin);
+  Serial.print(", buttonOpenState: ");
+  Serial.println(buttonOpenState);
+  if (buttonCloseState == HIGH) {
+    angleServoClaw = 0;
+  } 
+  if (buttonOpenState == HIGH) {
+    angleServoClaw = 179;
+  }
 
   // scale the numbers from the pot & print out the angle for the servo motor
-  angleServoRot = map(potValServoRot, 0, 1023, 0, 179);
+  angleServoRot = map(potValServoRot, 0, 1023, 60, 120);
   Serial.print(", angleServoRot: ");
   Serial.println(angleServoRot);
-  angleServoArm1 = map(potValServoArm1, 0, 1023, 0, 179);
+  angleServoArm1 = map(potValServoArm1, 0, 1023, 63, 179);
   Serial.print(", angleServoArm1: ");
   Serial.println(angleServoArm1);
-  angleServoArm2 = map(potValServoArm2, 0, 1023, 0, 179);
+  angleServoArm2 = map(potValServoArm2, 0, 1023, 47, 126);
   Serial.print(", angleServoArm2: ");
   Serial.println(angleServoArm2);
-  angleServoClaw = map(potValServoClaw, 0, 1023, 0, 179);
+
   Serial.print(", angleServoClaw: ");
   Serial.println(angleServoClaw);
 

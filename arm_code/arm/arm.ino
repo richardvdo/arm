@@ -38,16 +38,17 @@ void setup() {
 
 void loop() {
 
+  Serial.println(" -- nouvelle boucle -- ");
   
   potValServoRot = analogRead(potPinServoRot); // read the value of the potentiometer
-  Serial.print("potValServoRot: ");
-  Serial.print(potValServoRot);
+  Serial.print(", potValServoRot: ");
+  Serial.println(potValServoRot);
   potValServoArm1 = analogRead(potPinServoArm1); // read the value of the potentiometer
-  Serial.print("potValServoArm1: ");
-  Serial.print(potValServoArm1);
+  Serial.print(", potValServoArm1: ");
+  Serial.println(potValServoArm1);
   potValServoArm2 = analogRead(potPinServoArm2); // read the value of the potentiometer
-  Serial.print("potValServoArm2: ");
-  Serial.print(potValServoArm2);
+  Serial.print(", potValServoArm2: ");
+  Serial.println(potValServoArm2);
 
   buttonCloseState = digitalRead(buttonClosePin);
   Serial.print(", buttonCloseState: ");
@@ -55,10 +56,10 @@ void loop() {
   buttonOpenState = digitalRead(buttonOpenPin);
   Serial.print(", buttonOpenState: ");
   Serial.println(buttonOpenState);
-  if (buttonCloseState == HIGH) {
+  if (buttonCloseState == LOW) {
     angleServoClaw = 0;
   } 
-  if (buttonOpenState == HIGH) {
+  if (buttonOpenState == LOW) {
     angleServoClaw = 179;
   }
 
@@ -83,5 +84,5 @@ void loop() {
   servoClaw.write(angleServoClaw);
   
   // wait for the servo to get there
-  delay(15);
+  delay(30);
 }

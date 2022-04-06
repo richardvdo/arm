@@ -29,6 +29,7 @@ void setup() {
   angleServoArm1 = 50;
   angleServoArm2 = 50;
   angleServoClaw = 50;
+
   
 }
 
@@ -40,12 +41,21 @@ while (Serial.available() > 0) {
     // look for the next valid integer in the incoming serial stream:
     int cmdAngleServoRot = Serial.parseInt();
     // do it again:
+    Serial.print("\n cmdAngleServoRot : ");
+    Serial.println(cmdAngleServoRot);
     int cmdAngleServoArm1 = Serial.parseInt();
+    Serial.print("\n cmdAngleServoArm1 : ");
+    Serial.println(cmdAngleServoArm1);
     // do it again:
     int cmdAngleServoArm2 = Serial.parseInt();
+    Serial.print("\n cmdAngleServoArm2 : ");
+    Serial.println(cmdAngleServoArm2);
     // do it again:
     int cmdAngleServoClaw = Serial.parseInt();
-
+    Serial.print("\n cmdAngleServoClaw : ");
+    Serial.println(cmdAngleServoClaw);
+    
+    
     // look for the newline. That's the end of your sentence:
     if (Serial.read() == '\n') {
 
@@ -62,6 +72,8 @@ while (Serial.available() > 0) {
      Serial.println(angleServoArm1);
       
      angleServoArm2 = angleServoArm2 + cmdAngleServoArm2;
+     Serial.print("\n addition : ");
+     Serial.println(angleServoArm2);
      angleServoArm2 = min(angleServoArm2, 100);
      angleServoArm1 = max(angleServoArm2, 0);
      Serial.print("\n angleServoArm2: ");
@@ -98,7 +110,7 @@ while (Serial.available() > 0) {
   servoClaw.write(angleServoClawMap);
   
   // wait for the servo to get there
-  delay(30);
+  delay(1000);
 
 
   
